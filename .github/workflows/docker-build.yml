@@ -1,0 +1,22 @@
+name: Build Docker Image - Agenda de Citas
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Construir imagen Docker
+        run: docker build -t agenda-citas:latest .
+
+      - name: Ver imagenes disponibles
+        run: docker images
+
+      - name: Verificar que la imagen fue creada
+        run: |
+          docker images | grep "agenda-citas" && echo "Imagen construida exitosamente" || (echo "ERROR: imagen no encontrada" && exit 1)
